@@ -1,1 +1,1 @@
-# 2025-FBLA-Website-Coding-Development-Proposal
+# 2025-FBLA-WCD-Proposal
