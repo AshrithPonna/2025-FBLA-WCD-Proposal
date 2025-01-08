@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>EmployeeExpress|Main</title>
+    <meta name = "description" content = "Employee Application Opportunities">
+    <meta name = "keywords" content = "Employee, Job Opportunities, Wages, Jobs, Work">
+    <meta name = "author" content = "Uhigh">
+    <meta name = "viewport" content = "width-device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <h1>EmployeeExpress©</h1>
+    <hr>
+
+    <br>
+
+   <h3 style = "text-align: center;"><b>Oversight Post Panel</b></h3>
+
+   <br>
+
+    <p><b>Employment Information</b></p>
+    <div>Position of Employment: <span id= "position-title" ></span></div>
+    
+    <br>
+
+    <div>Description of Position: <span id= "description-position" ></span></div>
+
+    <br>
+
+    <div>Preferred Degree of Study: <span id= "degree-study" ></span></div>
+
+    <br>
+
+    <div>Preferred Field(s) of Study: <span id= "study" ></span></div>
+
+    <br>
+
+    <p><b>Contact Information</b></p>
+    <div>Email: <span id= "contact-email" ></span></div>
+
+    <br>
+
+    <div>Phone: <span id= "phone-number" ></span></div>
+
+    <br>
+
+    <p><b>Application Analytics</b></p>
+    <div>Date: <span id= "date-post" ></span></div>
+
+    <br>
+
+    <div>Time: <span id= "time-submission" ></span></div>
+
+    <br>
+
+    <p><b>Work Information</b></p>
+    <div>Type of Work: <span id= "work-type" ></span></div>
+
+    <br>
+
+    <div>Average Working Hours: <span id= "work-hours" ></span></div>
+
+    <script> 
+        const positiontitle = localStorage.getItem('position-title');
+        const descriptionposition = localStorage.getItem('description-position');
+        const degreestudy = localStorage.getItem('degree-study');
+        const study = localStorage.getItem('study');
+        const contactemail = localStorage.getItem('contact-email');
+        const phonenumber = localStorage.getItem('phone-number');
+        const datepost = localStorage.getItem('date-post');
+        const timesubmission = localStorage.getItem('time-submission');
+        const worktype = localStorage.getItem('work-type');
+        const workhours = localStorage.getItem('work-hours');
+
+        document.getElementById('position-title').textContent = positiontitle;
+        document.getElementById('description-position').textContent = descriptionposition;
+        document.getElementById('degree-study').textContent = degreestudy;
+        document.getElementById('study').textContent = study;
+        document.getElementById('contact-email').textContent = contactemail;
+        document.getElementById('phone-number').textContent = phonenumber;
+        document.getElementById('date-post').textContent = datepost;
+        document.getElementById('time-submission').textContent = workhours;
+        document.getElementById('work-type').textContent = worktype;
+        document.getElementById('work-hours').textContent = workhours;
+    </script>
+
+</body>
+</html>
