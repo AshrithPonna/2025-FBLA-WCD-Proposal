@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
   <link rel="stylesheet" href="navbar.css">
+  <link rel="stylesheet" href="background.css">
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
+  <h1 style="background-color: white;">EmployeeExpress©</h1>
+
   <nav>
     <input type="checkbox" id="sidebar-active">
     <label for="sidebar-active" class="open-sidebar-button">
@@ -18,7 +22,18 @@
     </div>
   </nav>
 
-  <h1>Welcome to the Home Page</h1>
+  <section class="wrapper">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    <div id="title">
+      <b><span>EmployeeExpress</span></b>
+      <br>
+      <span>A Woojin Product</span>
+    </div>
+  </section>
+
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
@@ -41,12 +56,12 @@
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, async (user) => {
+      const navLinks = document.getElementById('nav-links');
       if (user) {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const userType = userDoc.data().userType;
-        const navLinks = document.getElementById('nav-links');
 
-        navLinks.innerHTML = '<a class="home-link" href="index.html">Home</a>';
+        navLinks.innerHTML = '<a class="home-link" href="index.html">EmployeeExpress</a>';
         navLinks.innerHTML += '<a href="viewpostings.html">Opportunities</a>';
         navLinks.innerHTML += '<a href="signin.html">Login</a>';
 
@@ -58,7 +73,7 @@
           navLinks.innerHTML += '<a href="admin.html">Admin</a>';
         }
       } else {
-        window.location.href = 'signin.html';
+        navLinks.innerHTML = '<a href="signin.html">Sign In</a>';
       }
     });
   </script>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit Job Posting</title>
   <link rel="stylesheet" href="navbar.css">
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
   <meta name="description" content="Employee Application Opportunities">
   <meta name="keywords" content="Employee, Job Opportunities, Wages, Jobs, Work">
   <meta name="author" content="Uhigh">
@@ -28,29 +29,22 @@
   </style>
 </head>
 <body>
+
+
   <nav>
     <input type="checkbox" id="sidebar-active">
     <label for="sidebar-active" class="open-sidebar-button">
       <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
     </label>
     <label id="overlay" for="sidebar-active"></label>
-    <div class="links-container">
-      <label for="sidebar-active" class="close-sidebar-button">
-        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-      </label>
-
-      <a class="home-link" href="index.html">Home</a> <!-- link back to homepage -->
-      <a href="submitposting.html">Submit</a> 
-      <a href="viewpostings.html">Opportunities</a>
-      <a href="signin.html">Login</a>
-      <!-- <a href="admin.html">Admin</a> -->
+    <div class="links-container" id="nav-links">
+      <!-- Navigation links will be dynamically generated here -->
     </div>
   </nav>
 
+ 
+
   <h1>Submit Job Posting</h1>
-  <hr>
-  <br>
-  <h3 style="text-align: center;"><b>Employee Posting Portal</b></h3>
 
   <form id="jobPostingForm">
     <br>
@@ -115,18 +109,14 @@
     </div>
   </form>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const userType = localStorage.getItem('userType');
-      if (userType !== 'employer' && userType !== 'admin') {
-        window.location.href = 'signin.html';
-      }
-    });
-  </script>
-
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -141,16 +131,39 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
     const db = getFirestore(app);
 
-    async function addJobPostingToFirestore(jobPosting) {
-        try {
-            await addDoc(collection(db, "unapproved"), jobPosting);
-            alert('Job posting submitted successfully!');
-        } catch (error) {
-            console.error('Error submitting job posting:', error);
-            alert('Error submitting job posting. Please try again.');
+    onAuthStateChanged(auth, async (user) => {
+      const navLinks = document.getElementById('nav-links');
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userType = userDoc.data().userType;
+
+        navLinks.innerHTML = '<a class="home-link" href="index.html">EmployeeExpress</a>';
+        navLinks.innerHTML += '<a href="viewpostings.html">Opportunities</a>';
+        navLinks.innerHTML += '<a href="signin.html">Login</a>';
+
+        if (userType === 'employer' || userType === 'admin') {
+          navLinks.innerHTML += '<a href="submitposting.html">Submit</a>';
         }
+
+        if (userType === 'admin') {
+          navLinks.innerHTML += '<a href="admin.html">Admin</a>';
+        }
+      } else {
+        navLinks.innerHTML = '<a href="signin.html">Sign In</a>';
+      }
+    });
+
+    async function addJobPostingToFirestore(jobPosting) {
+      try {
+        await addDoc(collection(db, "unapproved"), jobPosting);
+        alert('Job posting submitted successfully!');
+      } catch (error) {
+        console.error('Error submitting job posting:', error);
+        alert('Error submitting job posting. Please try again.');
+      }
     }
 
     const form = document.getElementById('jobPostingForm');
@@ -166,37 +179,37 @@
     const workhours = document.getElementById('workhours');
 
     form.addEventListener('submit', function(e){
-        e.preventDefault();
-        const positiontitleValue = positiontitle.value;
-        const descriptionpositionValue = descriptionposition.value;
-        let degreestudyValue;
-        for (const radio of degreestudy) {
-            if (radio.checked) {
-                degreestudyValue = radio.value;
-                break;
-            }
+      e.preventDefault();
+      const positiontitleValue = positiontitle.value;
+      const descriptionpositionValue = descriptionposition.value;
+      let degreestudyValue;
+      for (const radio of degreestudy) {
+        if (radio.checked) {
+          degreestudyValue = radio.value;
+          break;
         }
-        const studyValue = study.value;
-        const contactemailValue = contactemail.value;
-        const phonenumberValue = phonenumber.value;
-        const datepostValue = datepost.value;
-        const timesubmissionValue = timesubmission.value;
-        const worktypeValue = worktype.value;
-        const workhoursValue = workhours.value;
+      }
+      const studyValue = study.value;
+      const contactemailValue = contactemail.value;
+      const phonenumberValue = phonenumber.value;
+      const datepostValue = datepost.value;
+      const timesubmissionValue = timesubmission.value;
+      const worktypeValue = worktype.value;
+      const workhoursValue = workhours.value;
 
-        // Call the function to add the job posting to Firestore
-        addJobPostingToFirestore({
-            positionTitle: positiontitleValue,
-            descriptionPosition: descriptionpositionValue,
-            degreeStudy: degreestudyValue,
-            study: studyValue,
-            contactEmail: contactemailValue,
-            phoneNumber: phonenumberValue,
-            datePost: datepostValue,
-            timeSubmission: timesubmissionValue,
-            workType: worktypeValue,
-            workHours: workhoursValue
-        });
+      // Call the function to add the job posting to Firestore
+      addJobPostingToFirestore({
+        positionTitle: positiontitleValue,
+        descriptionPosition: descriptionpositionValue,
+        degreeStudy: degreestudyValue,
+        study: studyValue,
+        contactEmail: contactemailValue,
+        phoneNumber: phonenumberValue,
+        datePost: datepostValue,
+        timeSubmission: timesubmissionValue,
+        workType: worktypeValue,
+        workHours: workhoursValue
+      });
     });
   </script>
 </body>
