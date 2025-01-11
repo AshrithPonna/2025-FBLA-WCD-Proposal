@@ -3,169 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About</title>
+  <title>Apply for Job</title>
   <link rel="stylesheet" href="navbar.css">
-  <title>EmployeeExpress|Applicants</title>
-    <meta name = "description" content = "Employee Application Opportunities">
-    <meta name = "keywords" content = "Employee, Job Opportunities, Wages, Jobs, Work">
-    <meta name = "author" content = "Uhigh">
-    <meta name = "viewport" content = "width-device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
+
   <nav>
     <input type="checkbox" id="sidebar-active">
     <label for="sidebar-active" class="open-sidebar-button">
       <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
     </label>
     <label id="overlay" for="sidebar-active"></label>
-    <div class="links-container">
-      <label for="sidebar-active" class="close-sidebar-button">
-        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-      </label>
-
-      <!-- link back to homepage -->
-      <a class="home-link" href="mainbar.html">Home</a> 
-      <a href="submitposting.html">Submit</a> 
-      <a href="viewpostings.html">Opportunities</a>
-      <a href="signin.html">Login</a>
-      
+    <div class="links-container" id="nav-links">
+      <!-- Navigation links will be dynamically generated here -->
     </div>
   </nav>
 
-  <h1>About</h1>
 
-  
+  <h1>Apply for Job</h1>
 
-    <h1>EmployeeExpress©</h1>
-    <hr>
+  <form id="applicationForm">
+    <div>
+      <label for="applicantName">Name:</label>
+      <input type="text" id="applicantName" name="applicantName" required>
+    </div>
+    <div>
+      <label for="applicantEmail">Email:</label>
+      <input type="email" id="applicantEmail" name="applicantEmail" required>
+    </div>
+    <div>
+      <label for="applicantPhone">Phone Number:</label>
+      <input type="tel" id="applicantPhone" name="applicantPhone" required>
+    </div>
+    <div>
+      <label for="applicantResume">Resume:</label>
+      <textarea id="applicantResume" name="applicantResume" required></textarea>
+    </div>
+    <div>
+      <input type="submit" value="Submit Application">
+    </div>
+  </form>
 
-    <br>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-   <h3 style = "text-align: center;"><b>Student Application Portal</b></h3>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCcl0VpZVoZPEuH0ClO476utEx_MPVf8cM",
+      authDomain: "employeeexpress-3d548.firebaseapp.com",
+      projectId: "employeeexpress-3d548",
+      storageBucket: "employeeexpress-3d548.firebasestorage.app",
+      messagingSenderId: "693193553389",
+      appId: "1:693193553389:web:63d882004970711b7ca3e4",
+      measurementId: "G-7T5C10WR4L"
+    };
 
-    <form id = "form">
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore(app);
 
-        <br>
+    onAuthStateChanged(auth, async (user) => {
+      const navLinks = document.getElementById('nav-links');
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userType = userDoc.data().userType;
 
-        <div>
-            <p><b>Personal Information</b></p>
-        <label>First Name:</label>
-        <input type = "text" id = "firstname" name = "firstname" placeholder = "John">
-        </div>
+        navLinks.innerHTML = '<a class="home-link" href="index.html">EmployeeExpress</a>';
+        navLinks.innerHTML += '<a href="viewpostings.html">Opportunities</a>';
+        navLinks.innerHTML += '<a href="signin.html">Login</a>';
 
-        <br>
+        if (userType === 'employer' || userType === 'admin') {
+          navLinks.innerHTML += '<a href="submitposting.html">Submit</a>';
+        }
 
-        <label>Last Name:</label>
-        <input type = "text" id = "lastname" name = "lastname" placeholder = "Doe">
-        </div>
+        if (userType === 'admin') {
+          navLinks.innerHTML += '<a href="admin.html">Admin</a>';
+        }
+      } else {
+        navLinks.innerHTML = '<a href="signin.html">Sign In</a>';
+      }
+    });
 
-        <br>
+    const urlParams = new URLSearchParams(window.location.search);
+    const jobId = urlParams.get('jobId');
 
-        <label>Address:</label>
-        <input type = "text" id = "address" name = "address" placeholder = "123 Sorin Dr.">
-        </div>
+    const form = document.getElementById('applicationForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-        <br>
+      const applicantName = document.getElementById('applicantName').value;
+      const applicantEmail = document.getElementById('applicantEmail').value;
+      const applicantPhone = document.getElementById('applicantPhone').value;
+      const applicantResume = document.getElementById('applicantResume').value;
 
-        <p><b>Contact Information</b></p>
-            <label for = "email">Email:</label>
-            <input type = "email" id = "contactemail" name = "contactemail" placeholder = "johndoe@gmail.com">
-        </div>
-
-        <br>
-
-        <div>
-            <label for = "phone">Office Number:</label>
-            <input type = "tel" id = "phonenumber" name = "phonenumber" placeholder = "+1 (123)-456-7890">
-        </div>
-
-        <br>
-        
-        <p><b>Employment History</b></p>
-        <div>
-            <label>Employment Experience #1:</label>
-            <input type = "text" id = "exploymentexperience1" name = "exploymentexperience1" placeholder = "Over the past summer, I sought out an internship at Rivian, giving me the ability to view new perspectives...">
-        </div>
-
-        <br>
-
-        <div>
-            <label>Employment Experience #2:</label>
-            <input type = "text" id = "exploymentexperience2" name = "exploymentexperience2" placeholder = "Over the past summer, I sought out an internship at Rivian, giving me the ability to view new perspectives...">
-        </div>
-
-        <br>
-
-        <div>
-            <label>Employment Experience #3:</label>
-            <input type = "text" id = "exploymentexperience3" name = "exploymentexperience3" placeholder = "Over the past summer, I sought out an internship at Rivian, giving me the ability to view new perspectives...">
-        </div>
-
-        <br>
-
-        <p><b>Academic History</b></p>
-        <div>
-            <label>College Institution:</label>
-            <input type = "text" id = "college" name = "college" placeholder = "Harvard">
-        </div>
-
-        <br>
-
-        <div>
-            <label>College Courses:</label>
-            <input type = "text" id = "collegecourses" name = "collegecourses" placeholder = "Cosmetology - 751, 993...">
-        </div>
-
-        <br>
-
-        <div>
-            <label>Skills:</label>
-            <input type = "text" id = "skills" name = "skills" placeholder = "Efficient in Python, Java...">
-        </div>
-
-        <br>
-
-        <p><b>Personal Statement(s)</b></p>
-
-        <br>
-
-        <div>
-            <label>Prompt#1: In what setting(s) have you truly felt the most successful in?:</label>
-            <input type = "text" id = "skills" name = "skills" placeholder = "Work has always allowed me to percieve numerous opportunities...">
-        </div>
-
-        <br>
-
-        <div>
-            <label>Prompt#2: What are your perspectives on the "best working environment?":</label>
-            <input type = "text" id = "skills" name = "skills" placeholder = "Cleanliness, good workers, and more, are all crucial aspects of...">
-        </div>
-
-        <br>
-
-        <p><b>References</b></p>
-
-        <br>
-
-        <div>
-            <label for = "email">Reference #1:</label>
-            <input type = "email" id = "reference1" name = "reference1" placeholder = "johndoe@gmail.com">
-        </div>
-
-        <br>
-
-        <div>
-            <label for = "email">Reference #2:</label>
-            <input type = "email" id = "reference2" name = "reference2" placeholder = "johndoe@gmail.com">
-        </div>
-
-        <br>
-
-        <div>
-            <input type = "reset">
-            <input type = "submit">
-        </div>
-
-    </form>
+      try {
+        await addDoc(collection(db, "applications"), {
+          jobId: jobId,
+          applicantName: applicantName,
+          applicantEmail: applicantEmail,
+          applicantPhone: applicantPhone,
+          applicantResume: applicantResume,
+          userId: user.uid
+        });
+        alert('Application submitted successfully!');
+        window.location.href = 'viewpostings.html';
+      } catch (error) {
+        console.error('Error submitting application:', error);
+        alert('Error submitting application. Please try again.');
+      }
+    });
+  </script>
 </body>
 </html>
