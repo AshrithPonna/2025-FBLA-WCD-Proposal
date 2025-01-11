@@ -1,6 +1,12 @@
+
+/*Function Aiming to Count Till Chosen Date*/
+
 const countdown = () => {
     // Specify the date and time we are counting down to.
-    const countDate = new Date("Jan 1, 2035 00:00:00").getTime();
+
+  //Variables Accounted For Calculations*/
+
+    const countDate = new Date("Jan 21, 2025 00:00:00").getTime();
     const now = new Date().getTime();
     const remainingTime = countDate - now;
   
@@ -20,5 +26,6 @@ const countdown = () => {
     document.querySelector(".second").innerText = textSecond > 0 ? textSecond : 0;
   };
   
-  // Should use 500 as setInterval won't always run on time.
+  // should use 500 as setInterval won't always run on time.
+  
   setInterval(countdown, 500);
