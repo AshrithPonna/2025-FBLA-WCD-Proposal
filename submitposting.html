@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About</title>
+  <title>Submit Job Posting</title>
   <link rel="stylesheet" href="navbar.css">
-  <title>EmployeeExpress|Applicants</title>
-    <meta name = "description" content = "Employee Application Opportunities">
-    <meta name = "keywords" content = "Employee, Job Opportunities, Wages, Jobs, Work">
-    <meta name = "author" content = "Uhigh">
-    <meta name = "viewport" content = "width-device-width, initial-scale=1.0">
+  <script type="module" src="firebaseauth.js"></script>
+  <meta name="description" content="Employee Application Opportunities">
+  <meta name="keywords" content="Employee, Job Opportunities, Wages, Jobs, Work">
+  <meta name="author" content="Uhigh">
+  <meta name="viewport" content="width-device-width, initial-scale=1.0">
 </head>
 <body>
   <nav>
@@ -23,170 +23,138 @@
         <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
       </label>
 
-      <a class="home-link" href="index.html">Home</a> <!-- link back to homepage -->
-      <a href="about.html">Submit</a> 
+      <a class="home-link" href="mainbar.html">Home</a> <!-- link back to homepage -->
+      <a href="submitposting.html">Submit</a> 
       <a href="products.html">Opportunities</a>
-      <a href="login.html">Login</a>
-      
+      <a href="signin.html">Login</a>
+
     </div>
   </nav>
 
-  <h1>About</h1>
+  <h1>Submit Job Posting</h1>
+  <hr>
+  <br>
+  <h3 style="text-align: center;"><b>Employee Posting Portal</b></h3>
 
-  
-
-    <h1>EmployeeExpress©</h1>
-    <hr>
-
+  <form id="jobPostingForm">
     <br>
+    <div>
+      <p><b>Employment Information</b></p>
+      <label for="positiontitle">Position of Employment:</label>
+      <input type="text" id="positiontitle" name="positiontitle" placeholder="Accountant" required>
+    </div>
+    <br>
+    <div>
+      <label for="descriptionposition">Description of Position:</label>
+      <textarea id="descriptionposition" name="descriptionposition" placeholder="Invest applicable hours on a day-to-day basis, helping investors, agents, and regular customers gain the best financial advice that they possibly can! Create new financial possibilities on a vast scale, allowing individuals to change their lives!" required></textarea>
+    </div>
+    <br>
+    <div>
+      <label for="degreestudy">Preferred Degree of Study:</label>
+      <label for="Associate">Associate</label>
+      <input type="radio" id="degreestudy" name="degree" value="Associate" required>
+      <label for="Bachelor">Bachelor</label>
+      <input type="radio" id="degreestudy" name="degree" value="Bachelor" required>
+      <label for="Master">Master</label>
+      <input type="radio" id="degreestudy" name="degree" value="Master" required>
+      <label for="Doctoral">Doctoral</label>
+      <input type="radio" id="degreestudy" name="degree" value="Doctoral" required>
+    </div>
+    <br>
+    <div>
+      <label for="study">Preferred Field(s) of Study</label>
+      <input type="text" id="study" name="study" placeholder="Finance, Computer Science, Etymology" required>
+    </div>
+    <br>
+    <div>
+      <p><b>Contact Information</b></p>
+      <label for="contactemail">Email:</label>
+      <input type="email" id="contactemail" name="contactemail" placeholder="johndoe@gmail.com" required>
+    </div>
+    <br>
+    <div>
+      <label for="phonenumber">Office Number:</label>
+      <input type="tel" id="phonenumber" name="phonenumber" placeholder="+1 (123)-456-7890" required>
+    </div>
+    <br>
+    <div>
+      <p><b>Application Analytics</b></p>
+      <label for="datepost">Date of Posting:</label>
+      <input type="date" id="datepost" name="datepost" required>
+    </div>
+    <br>
+    <div>
+      <label for="timesubmission">Time of Posting:</label>
+      <input type="time" id="timesubmission" name="timesubmission" required>
+    </div>
+    <br>
+    <div>
+      <p><b>Work Information</b></p>
+      <label for="worktype">Type of Work:</label>
+      <select id="worktype" name="worktype" required>
+        <option value="Hybrid">Hybrid</option>
+        <option value="Online">Online</option>
+        <option value="On-Site">On-Site</option>
+      </select>
+    </div>
+    <br>
+    <div>
+      <label for="workhours">Average Working Hours:</label>
+      <input type="number" id="workhours" name="workhours" placeholder="5" required>
+    </div>
+    <br>
+    <div>
+      <input type="reset">
+      <input type="submit">
+    </div>
+  </form>
 
-   <h3 style = "text-align: center;"><b>Employee Posting Portal</b></h3>
+  <script>
+    const form = document.getElementById('jobPostingForm');
+    const positiontitle = document.getElementById('positiontitle');
+    const descriptionposition = document.getElementById('descriptionposition');
+    const degreestudy = document.getElementsByName('degree');
+    const study = document.getElementById('study');
+    const contactemail = document.getElementById('contactemail');
+    const phonenumber = document.getElementById('phonenumber');
+    const datepost = document.getElementById('datepost');
+    const timesubmission = document.getElementById('timesubmission');
+    const worktype = document.getElementById('worktype');
+    const workhours = document.getElementById('workhours');
 
-    <form id = "form">
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const positiontitleValue = positiontitle.value;
+        const descriptionpositionValue = descriptionposition.value;
+        let degreestudyValue;
+        for (const radio of degreestudy) {
+            if (radio.checked) {
+                degreestudyValue = radio.value;
+                break;
+            }
+        }
+        const studyValue = study.value;
+        const contactemailValue = contactemail.value;
+        const phonenumberValue = phonenumber.value;
+        const datepostValue = datepost.value;
+        const timesubmissionValue = timesubmission.value;
+        const worktypeValue = worktype.value;
+        const workhoursValue = workhours.value;
 
-        <br>
-
-        <div>
-            <p><b>Employment Information</b></p>
-        <label>Position of Employment:</label>
-        <input type = "text" id = "positiontitle" name = "positiontitle" placeholder = "Accountant">
-        </div>
-
-        <br>
-
-        <div>
-            <label>Description of Position:</label>
-            <input type = "text" id = "descriptionposition" name = "descriptionposition" placeholder = "Invest applicable hours on a day-to-day basis, helping investors, agents, and regular customers gain the best financial advice that they possibly can! Create new financial possibilities on a vast scale, allowing individuals to change their lives!">
-        </div>
-
-        <br>
-
-        <div>
-            <label for = "degree">Preferred Degree of Study:</label>
-
-            <label for = "Associate">Associate</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Associate">
-
-            <label for = "Bachelor">Bachelor</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Bachelor">
-
-            <label for = "Master">Master</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Master">
-
-            <label for = "Doctoral">Doctoral</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Doctoral">
-        </div>
-
-        <br>
-
-        <div>
-        <label>Preferred Field(s) of Study</label>
-        <input type = "text" id = "study" name = "study" placeholder = "Finance, Computer Science, Etymology">
-        </div>
-
-        <br>
-
-        <div>
-            <p><b>Contact Information</b></p>
-            <label for = "email">Email:</label>
-            <input type = "email" id = "contactemail" name = "contactemail" placeholder = "johndoe@gmail.com">
-        </div>
-
-        <br>
-
-        <div>
-            <label for = "phone">Office Number:</label>
-            <input type = "tel" id = "phonenumber" name = "phonenumber" placeholder = "+1 (123)-456-7890">
-        </div>
-
-        <br>
-
-        <div>
-            <p><b>Application Analytics</b></p>
-            <label for = "date">Date of Posting:</label>
-            <input type = "date" id = "datepost" name = "datepost">
-        </div>
-
-        <br>
-
-        <div>
-            <label for = "time">Time of Posting:</label>
-            <input type = "time" id = "timesubmission" name = "timesubmission">
-        </div>
-
-        <br>
-
-        <div>
-            <p><b>Work Information</b></p>
-            <label for = "type">Type of Work: </label>
-            <select id = "worktype" name = "worktype">
-                <option>Hybrid</option>
-                <option>Online</option>
-                <option>On-Site</option>
-            </select>
-        </div>
-
-        <br>
-
-        <div>
-            <label for = "number">Average Working Hours:</label>
-            <input type = "number" id = "workhours" name = "workhours" placeholder="5">
-        </div>
-
-        <br>
-
-        <div>
-            <input type = "reset">
-            <input type = "submit">
-        </div>
-
-    </form>
-
-    <script>
-        const form = document.getElementById('form');
-        const positiontitle = document.getElementById('positiontitle');
-        const descriptionposition = document.getElementById('descriptionposition');
-        const degreestudy = document.getElementById('degreestudy');
-        const study = document.getElementById('study');
-        const contactemail = document.getElementById('contactemail');
-        const phonenumber = document.getElementById('phonenumber');
-        const datepost = document.getElementById('datepost');
-        const timesubmission = document.getElementById('timesubmission');
-        const worktype = document.getElementById('worktype');
-        const workhours = document.getElementById('workhours');
-
-        form.addEventListener('submit', function(e){
-            e.preventDefault();
-            const positiontitleValue = positiontitle.value;
-            const descriptionpositionValue = descriptionposition.value;
-            const degreestudyValue = degreestudy.value;
-            const studyValue = study.value;
-            const contactemailValue = contactemail.value;
-            const phonenumberValue = phonenumber.value;
-            const datepostValue = datepost.value;
-            const timesubmissionValue = timesubmission.value;
-            const worktypeValue = worktype.value;
-            const workhoursValue = workhours.value;
-
-
-            localStorage.setItem('position-title', positiontitleValue);
-            localStorage.setItem('description-position', descriptionpositionValue);
-            localStorage.setItem('degree-study', degreestudyValue);
-            localStorage.setItem('contact-email', contactemailValue);
-            localStorage.setItem('phone-number', phonenumberValue);
-            localStorage.setItem('date-post', datepostValue);
-            localStorage.setItem('time-submission', timesubmissionValue);
-            localStorage.setItem('work-type', worktypeValue);
-            localStorage.setItem('work-hours', workhoursValue);
-
-            window.location.href = "next.html";
-        })
-
-    </script>
-
-
-
-
+        // Call the function to add the job posting to Firestore
+        addJobPostingToFirestore({
+            positionTitle: positiontitleValue,
+            descriptionPosition: descriptionpositionValue,
+            degreeStudy: degreestudyValue,
+            study: studyValue,
+            contactEmail: contactemailValue,
+            phoneNumber: phonenumberValue,
+            datePost: datepostValue,
+            timeSubmission: timesubmissionValue,
+            workType: worktypeValue,
+            workHours: workhoursValue
+        });
+    });
+  </script>
 </body>
 </html>
-

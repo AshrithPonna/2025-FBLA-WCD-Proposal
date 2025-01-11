@@ -30,30 +30,47 @@ function showMessage(message, divId){
     }, 5000);
 }
 
+// Function to add job posting to Firestore
+async function addJobPostingToFirestore(jobPosting) {
+    try {
+        await addDoc(collection(db, "jobPostings"), jobPosting);
+        alert('Job posting submitted successfully!');
+    } catch (error) {
+        console.error('Error submitting job posting:', error);
+        alert('Error submitting job posting. Please try again.');
+    }
+}
+
 // Function to handle job posting form submission
 const jobPostingForm = document.getElementById('jobPostingForm');
 if (jobPostingForm) {
     jobPostingForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+        const positionTitle = document.getElementById('positiontitle').value;
+        const descriptionPosition = document.getElementById('descriptionposition').value;
+        const degreeStudy = document.getElementById('degreestudy').value;
         const study = document.getElementById('study').value;
         const contactEmail = document.getElementById('contactemail').value;
         const phoneNumber = document.getElementById('phonenumber').value;
         const datePost = document.getElementById('datepost').value;
-        const annualWork = document.getElementById('annualwork').value;
+        const timeSubmission = document.getElementById('timesubmission').value;
+        const workType = document.getElementById('worktype').value;
+        const workHours = document.getElementById('workhours').value;
 
-        try {
-            await addDoc(collection(db, "jobPostings"), {
-                study: study,
-                contactEmail: contactEmail,
-                phoneNumber: phoneNumber,
-                datePost: datePost,
-                annualWork: annualWork
-            });
-            alert('Job posting submitted successfully!');
-        } catch (error) {
-            console.error('Error submitting job posting:', error);
-            alert('Error submitting job posting. Please try again.');
-        }
+        const jobPosting = {
+            positionTitle: positionTitle,
+            descriptionPosition: descriptionPosition,
+            degreeStudy: degreeStudy,
+            study: study,
+            contactEmail: contactEmail,
+            phoneNumber: phoneNumber,
+            datePost: datePost,
+            timeSubmission: timeSubmission,
+            workType: workType,
+            workHours: workHours
+        };
+
+        await addJobPostingToFirestore(jobPosting);
     });
 }
 
