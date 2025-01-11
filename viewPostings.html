@@ -50,7 +50,7 @@
 
     <br>
 
-    <div>Time: <span id= "time-submission" ></span></div>
+    <div>Annual Type of Work: <span id= "annual-work" ></span></div>
 
     <br>
 
@@ -70,6 +70,7 @@
         const phonenumber = localStorage.getItem('phone-number');
         const datepost = localStorage.getItem('date-post');
         const timesubmission = localStorage.getItem('time-submission');
+        const annualwork = localStorage.getItem('annual-work')
         const worktype = localStorage.getItem('work-type');
         const workhours = localStorage.getItem('work-hours');
 
@@ -81,6 +82,7 @@
         document.getElementById('phone-number').textContent = phonenumber;
         document.getElementById('date-post').textContent = datepost;
         document.getElementById('time-submission').textContent = workhours;
+        document.getElementById('annual-work').textContent = annualwork;
         document.getElementById('work-type').textContent = worktype;
         document.getElementById('work-hours').textContent = workhours;
     </script>
