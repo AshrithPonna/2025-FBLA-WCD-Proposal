@@ -20,5 +20,5 @@ const countdown = () => {
     document.querySelector(".second").innerText = textSecond > 0 ? textSecond : 0;
   };
   
-  // should use 500 as setInterval won't always run on time.
+  // Should use 500 as setInterval won't always run on time.
   setInterval(countdown, 500);

@@ -36,6 +36,8 @@
         <div class="input-group">
             <i class="fas fa-user-tag"></i>
             <label for="userType" class="center-label">User Type</label>
+
+            // Selector for users
             <select id="userType" class="move-right" required>
                 <option value="" disabled selected>Select User Type</option>
                 <option value="student">Student</option>
@@ -45,14 +47,6 @@
         </div>
        <button class="btn" id="submitSignUp" type="submit">Sign Up</button>
       </form>
-      <!-- <p class="or">
-        ----------or--------
-      </p>
-      <div class="icons">
-        <i class="fab fa-google"></i>
-        <i class="fab fa-facebook"></i>
-      </div>
-      <div class="links"> -->
         <p class="question">Already Have Account ?</p>
         <button id="signInButton">Sign In</button>
       </div>
@@ -75,14 +69,6 @@
           </div>
          <button  class="btn"  id="submitSignIn">Sign In</button>
         </form>
-        <!-- <p class="or">
-          ----------or--------
-        </p>
-        <div class="icons">
-          <i class="fab fa-google"></i>
-          <i class="fab fa-facebook"></i>
-        </div>
-        <div class="links"> -->
           <p class="question">Don't have account yet?</p>
           <button id="signUpButton">Sign Up</button>
         </div>
@@ -91,18 +77,17 @@
       <script>
         document.getElementById('signupForm').addEventListener('submit', function(event) {
           event.preventDefault();
-          // Handle the form submission here, e.g., using Firebase
+          // Handle the form submission here and uploads to collects for Firebase
           const fName = document.getElementById('fName').value;
           const lName = document.getElementById('lName').value;
           const email = document.getElementById('rEmail').value;
           const password = document.getElementById('rPassword').value;
   
-          // Example Firebase authentication code
+          // Firebase creating users with authetication systems
           firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
-              // Signed in 
               var user = userCredential.user;
-              // ...
+
               console.log('User registered:', user);
             })
             .catch((error) => {

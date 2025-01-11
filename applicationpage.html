@@ -66,6 +66,7 @@
     const auth = getAuth();
     const db = getFirestore(app);
 
+    // Handles user specific portals
     onAuthStateChanged(auth, async (user) => {
       const navLinks = document.getElementById('nav-links');
       if (user) {

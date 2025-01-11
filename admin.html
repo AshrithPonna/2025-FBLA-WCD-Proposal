@@ -48,6 +48,9 @@
   </style>
 </head>
 <body>
+
+
+  // Dynamic nav bar depending on user
   <nav>
     <input type="checkbox" id="sidebar-active">
     <label for="sidebar-active" class="open-sidebar-button">
@@ -55,7 +58,6 @@
     </label>
     <label id="overlay" for="sidebar-active"></label>
     <div class="links-container" id="nav-links">
-      <!-- Navigation links will be dynamically generated here -->
     </div>
   </nav>
   <h1>Admin - Approve Job Postings</h1>
@@ -70,7 +72,7 @@
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
     import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-    // Your web app's Firebase configuration
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCcl0VpZVoZPEuH0ClO476utEx_MPVf8cM",
       authDomain: "employeeexpress-3d548.firebaseapp.com",
@@ -86,6 +88,8 @@
     const auth = getAuth();
     const db = getFirestore(app);
 
+
+      // Handels dynamic user portals
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -108,6 +112,7 @@
       }
     });
 
+    // Retrieves data from firebase that needs approval
     async function fetchUnapprovedJobPostings() {
       const unapprovedJobPostingsContainer = document.getElementById('unapprovedJobPostingsContainer');
       const querySnapshot = await getDocs(collection(db, "unapproved"));
@@ -147,6 +152,7 @@
       });
     }
 
+    // Functionality for approving postings
     async function approveJobPosting(jobId) {
       const jobDoc = doc(db, "unapproved", jobId);
       const jobData = (await getDoc(jobDoc)).data();
@@ -156,6 +162,7 @@
       location.reload();
     }
 
+    // Functionality for disapproving posting
     async function disapproveJobPosting(jobId) {
       const jobDoc = doc(db, "unapproved", jobId);
       await deleteDoc(jobDoc);
