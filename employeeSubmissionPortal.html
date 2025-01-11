@@ -1,108 +1,104 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-    <title>EmployeeExpress|Applicants</title>
-    <meta name = "description" content = "Employee Application Opportunities">
-    <meta name = "keywords" content = "Employee, Job Opportunities, Wages, Jobs, Work">
-    <meta name = "author" content = "Uhigh">
-    <meta name = "viewport" content = "width-device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Submission Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="firebaseauth.js"></script>
 </head>
 
 <body>
 
-    <h1>EmployeeExpress©</h1>
+    <h1>Employee Submission Portal</h1>
     <hr>
 
     <br>
 
-   <h3 style = "text-align: center;"><b>Employee Posting Portal</b></h3>
+    <h3 style="text-align: center;"><b>Employee Posting Portal</b></h3>
 
-    <form id = "form">
+    <form id="jobPostingForm">
 
         <br>
 
         <div>
             <p><b>Employment Information</b></p>
-        <label>Position of Employment:</label>
-        <input type = "text" id = "positiontitle" name = "positiontitle" placeholder = "Accountant">
+            <label>Position of Employment:</label>
+            <input type="text" id="positiontitle" name="positiontitle" placeholder="Accountant">
         </div>
 
         <br>
 
         <div>
             <label>Description of Position:</label>
-            <input type = "text" id = "descriptionposition" name = "descriptionposition" placeholder = "Invest applicable hours on a day-to-day basis, helping investors, agents, and regular customers gain the best financial advice that they possibly can! Create new financial possibilities on a vast scale, allowing individuals to change their lives!">
+            <input type="text" id="descriptionposition" name="descriptionposition" placeholder="Invest applicable hours on a day-to-day basis, helping investors, agents, and regular customers gain the best financial advice that they possibly can! Create new financial possibilities on a vast scale, allowing individuals to change their lives!">
         </div>
 
         <br>
 
         <div>
-            <label for = "degree">Preferred Degree of Study:</label>
+            <label for="degree">Preferred Degree of Study:</label>
 
-            <label for = "Associate">Associate</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Associate">
+            <label for="Associate">Associate</label>
+            <input type="radio" id="degreestudy" name="degree" value="Associate">
 
-            <label for = "Bachelor">Bachelor</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Bachelor">
+            <label for="Bachelor">Bachelor</label>
+            <input type="radio" id="degreestudy" name="degree" value="Bachelor">
 
-            <label for = "Master">Master</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Master">
+            <label for="Master">Master</label>
+            <input type="radio" id="degreestudy" name="degree" value="Master">
 
-            <label for = "Doctoral">Doctoral</label>
-            <input type = "radio" id = "degreestudy" name = "degree" value = "Doctoral">
+            <label for="Doctoral">Doctoral</label>
+            <input type="radio" id="degreestudy" name="degree" value="Doctoral">
         </div>
 
         <br>
 
         <div>
-        <label>Preferred Field(s) of Study</label>
-        <input type = "text" id = "study" name = "study" placeholder = "Finance, Computer Science, Etymology">
+            <label>Preferred Field(s) of Study</label>
+            <input type="text" id="study" name="study" placeholder="Finance, Computer Science, Etymology">
         </div>
 
         <br>
 
         <div>
             <p><b>Contact Information</b></p>
-            <label for = "email">Email:</label>
-            <input type = "email" id = "contactemail" name = "contactemail" placeholder = "johndoe@gmail.com">
+            <label for="email">Email:</label>
+            <input type="email" id="contactemail" name="contactemail" placeholder="johndoe@gmail.com">
         </div>
 
         <br>
 
         <div>
-            <label for = "phone">Office Number:</label>
-            <input type = "tel" id = "phonenumber" name = "phonenumber" placeholder = "+1 (123)-456-7890">
+            <label for="phone">Office Number:</label>
+            <input type="tel" id="phonenumber" name="phonenumber" placeholder="+1 (123)-456-7890">
         </div>
 
         <br>
 
         <div>
             <p><b>Application Analytics</b></p>
-            <label for = "date">Date of Posting:</label>
-            <input type = "date" id = "datepost" name = "datepost">
+            <label for="date">Date of Posting:</label>
+            <input type="date" id="datepost" name="datepost">
         </div>
 
         <br>
 
-        <label for = "type">Annual Type of Work: </label>
-            <select id = "annualwork" name = "annualwork">
-                <option>Seasonal</option>
-                <option>Intern</option>
-                <option>Part-Time</option>
-                <option>Full-Time</option>
-
-            </select>
-        </div>
-
+        <label for="type">Annual Type of Work: </label>
+        <select id="annualwork" name="annualwork">
+            <option>Seasonal</option>
+            <option>Intern</option>
+            <option>Part-Time</option>
+            <option>Full-Time</option>
+        </select>
 
         <br>
 
         <div>
             <p><b>Work Information</b></p>
-            <label for = "type">Type of Work: </label>
-            <select id = "worktype" name = "worktype">
+            <label for="type">Type of Work: </label>
+            <select id="worktype" name="worktype">
                 <option>Hybrid</option>
                 <option>Online</option>
                 <option>On-Site</option>
@@ -112,21 +108,21 @@
         <br>
 
         <div>
-            <label for = "number">Average Working Hours:</label>
-            <input type = "number" id = "workhours" name = "workhours" placeholder="5">
+            <label for="number">Average Working Hours:</label>
+            <input type="number" id="workhours" name="workhours" placeholder="5">
         </div>
 
         <br>
 
         <div>
-            <input type = "reset">
-            <input type = "submit">
+            <input type="reset">
+            <input type="submit">
         </div>
 
     </form>
 
     <script>
-        const form = document.getElementById('form');
+        const form = document.getElementById('jobPostingForm');
         const positiontitle = document.getElementById('positiontitle');
         const descriptionposition = document.getElementById('descriptionposition');
         const degreestudy = document.getElementById('degreestudy');
@@ -139,7 +135,7 @@
         const worktype = document.getElementById('worktype');
         const workhours = document.getElementById('workhours');
 
-        form.addEventListener('submit', function(e){
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
             const positiontitleValue = positiontitle.value;
             const descriptionpositionValue = descriptionposition.value;
@@ -161,13 +157,12 @@
             localStorage.setItem('phone-number', phonenumberValue);
             localStorage.setItem('date-post', datepostValue);
             localStorage.setItem('time-submission', timesubmissionValue);
-            localStorage.setItem('annual-work',annualworkValue)
+            localStorage.setItem('annual-work', annualworkValue)
             localStorage.setItem('work-type', worktypeValue);
             localStorage.setItem('work-hours', workhoursValue);
 
             window.location.href = "next.html";
         })
-
     </script>
 
 </body>
