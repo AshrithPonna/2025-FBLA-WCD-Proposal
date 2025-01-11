@@ -5,11 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit Job Posting</title>
   <link rel="stylesheet" href="navbar.css">
-  <script type="module" src="firebaseauth.js"></script>
   <meta name="description" content="Employee Application Opportunities">
   <meta name="keywords" content="Employee, Job Opportunities, Wages, Jobs, Work">
   <meta name="author" content="Uhigh">
   <meta name="viewport" content="width-device-width, initial-scale=1.0">
+  <style>
+    #jobPostingForm {
+      padding-left: 100px;
+    }
+    #jobPostingForm div {
+      margin-bottom: 20px;
+    }
+    #jobPostingForm label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    #jobPostingForm input, #jobPostingForm select, #jobPostingForm textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 <body>
   <nav>
@@ -23,11 +39,11 @@
         <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
       </label>
 
-      <a class="home-link" href="mainbar.html">Home</a> <!-- link back to homepage -->
+      <a class="home-link" href="index.html">Home</a> <!-- link back to homepage -->
       <a href="submitposting.html">Submit</a> 
-      <a href="products.html">Opportunities</a>
+      <a href="viewpostings.html">Opportunities</a>
       <a href="signin.html">Login</a>
-
+      <!-- <a href="admin.html">Admin</a> -->
     </div>
   </nav>
 
@@ -43,12 +59,10 @@
       <label for="positiontitle">Position of Employment:</label>
       <input type="text" id="positiontitle" name="positiontitle" placeholder="Accountant" required>
     </div>
-    <br>
     <div>
       <label for="descriptionposition">Description of Position:</label>
       <textarea id="descriptionposition" name="descriptionposition" placeholder="Invest applicable hours on a day-to-day basis, helping investors, agents, and regular customers gain the best financial advice that they possibly can! Create new financial possibilities on a vast scale, allowing individuals to change their lives!" required></textarea>
     </div>
-    <br>
     <div>
       <label for="degreestudy">Preferred Degree of Study:</label>
       <label for="Associate">Associate</label>
@@ -60,34 +74,28 @@
       <label for="Doctoral">Doctoral</label>
       <input type="radio" id="degreestudy" name="degree" value="Doctoral" required>
     </div>
-    <br>
     <div>
       <label for="study">Preferred Field(s) of Study</label>
       <input type="text" id="study" name="study" placeholder="Finance, Computer Science, Etymology" required>
     </div>
-    <br>
     <div>
       <p><b>Contact Information</b></p>
       <label for="contactemail">Email:</label>
       <input type="email" id="contactemail" name="contactemail" placeholder="johndoe@gmail.com" required>
     </div>
-    <br>
     <div>
       <label for="phonenumber">Office Number:</label>
       <input type="tel" id="phonenumber" name="phonenumber" placeholder="+1 (123)-456-7890" required>
     </div>
-    <br>
     <div>
       <p><b>Application Analytics</b></p>
       <label for="datepost">Date of Posting:</label>
       <input type="date" id="datepost" name="datepost" required>
     </div>
-    <br>
     <div>
       <label for="timesubmission">Time of Posting:</label>
       <input type="time" id="timesubmission" name="timesubmission" required>
     </div>
-    <br>
     <div>
       <p><b>Work Information</b></p>
       <label for="worktype">Type of Work:</label>
@@ -97,12 +105,10 @@
         <option value="On-Site">On-Site</option>
       </select>
     </div>
-    <br>
     <div>
       <label for="workhours">Average Working Hours:</label>
       <input type="number" id="workhours" name="workhours" placeholder="5" required>
     </div>
-    <br>
     <div>
       <input type="reset">
       <input type="submit">
@@ -110,6 +116,43 @@
   </form>
 
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const userType = localStorage.getItem('userType');
+      if (userType !== 'employer' && userType !== 'admin') {
+        window.location.href = 'signin.html';
+      }
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCcl0VpZVoZPEuH0ClO476utEx_MPVf8cM",
+      authDomain: "employeeexpress-3d548.firebaseapp.com",
+      projectId: "employeeexpress-3d548",
+      storageBucket: "employeeexpress-3d548.firebasestorage.app",
+      messagingSenderId: "693193553389",
+      appId: "1:693193553389:web:63d882004970711b7ca3e4",
+      measurementId: "G-7T5C10WR4L"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function addJobPostingToFirestore(jobPosting) {
+        try {
+            await addDoc(collection(db, "unapproved"), jobPosting);
+            alert('Job posting submitted successfully!');
+        } catch (error) {
+            console.error('Error submitting job posting:', error);
+            alert('Error submitting job posting. Please try again.');
+        }
+    }
+
     const form = document.getElementById('jobPostingForm');
     const positiontitle = document.getElementById('positiontitle');
     const descriptionposition = document.getElementById('descriptionposition');

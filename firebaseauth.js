@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, addDoc, collection, getDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,7 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
-const db = getFirestore();
+const db = getFirestore(app);
 
 function showMessage(message, divId){
     var messageDiv = document.getElementById(divId);
@@ -33,7 +33,7 @@ function showMessage(message, divId){
 // Function to add job posting to Firestore
 async function addJobPostingToFirestore(jobPosting) {
     try {
-        await addDoc(collection(db, "jobPostings"), jobPosting);
+        await addDoc(collection(db, "unapproved"), jobPosting);
         alert('Job posting submitted successfully!');
     } catch (error) {
         console.error('Error submitting job posting:', error);
@@ -119,19 +119,28 @@ if (signIn) {
         const password = document.getElementById('password').value;
 
         signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            showMessage('login is successful', 'signInMessage');
+        .then(async (userCredential) => {
             const user = userCredential.user;
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            const userData = userDoc.data();
             localStorage.setItem('loggedInUserId', user.uid);
-            window.location.href = 'homepage.html';
+            localStorage.setItem('userType', userData.userType);
+            redirectToPage(userData.userType);
         })
         .catch((error) => {
             const errorCode = error.code;
-            if (errorCode === 'auth/invalid-credential') {
-                showMessage('Incorrect Email or Password', 'signInMessage');
-            } else {
-                showMessage('Account does not Exist', 'signInMessage');
-            }
+            const errorMessage = error.message;
+            console.error('Error:', errorCode, errorMessage);
         });
     });
+}
+
+function redirectToPage(userType) {
+    if (userType === 'student') {
+        window.location.href = 'viewpostings.html';
+    } else if (userType === 'admin') {
+        window.location.href = 'admin.html';
+    } else if (userType === 'employer') {
+        window.location.href = 'submitposting.html';
+    }
 }
