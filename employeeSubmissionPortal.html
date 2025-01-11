@@ -86,10 +86,16 @@
 
         <br>
 
-        <div>
-            <label for = "time">Time of Posting:</label>
-            <input type = "time" id = "timesubmission" name = "timesubmission">
+        <label for = "type">Annual Type of Work: </label>
+            <select id = "annualwork" name = "annualwork">
+                <option>Seasonal</option>
+                <option>Intern</option>
+                <option>Part-Time</option>
+                <option>Full-Time</option>
+
+            </select>
         </div>
+
 
         <br>
 
@@ -129,6 +135,7 @@
         const phonenumber = document.getElementById('phonenumber');
         const datepost = document.getElementById('datepost');
         const timesubmission = document.getElementById('timesubmission');
+        const annualwork = document.getElementById('annualwork')
         const worktype = document.getElementById('worktype');
         const workhours = document.getElementById('workhours');
 
@@ -142,6 +149,7 @@
             const phonenumberValue = phonenumber.value;
             const datepostValue = datepost.value;
             const timesubmissionValue = timesubmission.value;
+            const annualworkValue = annualwork.value;
             const worktypeValue = worktype.value;
             const workhoursValue = workhours.value;
 
@@ -153,6 +161,7 @@
             localStorage.setItem('phone-number', phonenumberValue);
             localStorage.setItem('date-post', datepostValue);
             localStorage.setItem('time-submission', timesubmissionValue);
+            localStorage.setItem('annual-work',annualworkValue)
             localStorage.setItem('work-type', worktypeValue);
             localStorage.setItem('work-hours', workhoursValue);
 
