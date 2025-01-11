@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -35,6 +35,7 @@ signUp.addEventListener('click', (event) => {
     const password = document.getElementById('rPassword').value;
     const firstName = document.getElementById('fName').value;
     const lastName = document.getElementById('lName').value;
+    const userType = document.getElementById('userType').value;
 
     const auth = getAuth();
     const db = getFirestore();
@@ -45,9 +46,17 @@ signUp.addEventListener('click', (event) => {
         const userData = {
             email: email,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            userType: userType
         };
-        // Add user data to Firestore or handle it as needed
+        // Add user data to Firestore
+        setDoc(doc(db, "users", user.uid), userData)
+        .then(() => {
+            console.log('User data added to Firestore');
+        })
+        .catch((error) => {
+            console.error('Error adding user data to Firestore:', error);
+        });
         console.log('User registered:', user);
     })
     .catch((error) => {

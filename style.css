@@ -16,6 +16,12 @@ body{
     border-radius:10px;
     box-shadow:0 20px 35px rgba(0,0,1,0.9);
 }
+.question{
+    text-align:center;
+    font-size:1rem;
+    margin-top: 1rem;
+    margin-bottom:1rem;
+}
 form{
     margin:0 2rem;
 }
@@ -145,4 +151,13 @@ button:hover{
     opacity:0;
     animation:fadeOut 7s forwards;
 
+}
+.center-label {
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.move-right {
+    margin-left: 10px; /* Adjust this value as needed */
 }
