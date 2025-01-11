@@ -1,16 +1,39 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-    <title>EmployeeExpress|Applicants</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <link rel="stylesheet" href="navbar.css">
+  <title>EmployeeExpress|Applicants</title>
     <meta name = "description" content = "Employee Application Opportunities">
     <meta name = "keywords" content = "Employee, Job Opportunities, Wages, Jobs, Work">
     <meta name = "author" content = "Uhigh">
     <meta name = "viewport" content = "width-device-width, initial-scale=1.0">
 </head>
-
 <body>
+  <nav>
+    <input type="checkbox" id="sidebar-active">
+    <label for="sidebar-active" class="open-sidebar-button">
+      <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+    </label>
+    <label id="overlay" for="sidebar-active"></label>
+    <div class="links-container">
+      <label for="sidebar-active" class="close-sidebar-button">
+        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      </label>
+
+      <a class="home-link" href="index.html">Home</a> <!-- link back to homepage -->
+      <a href="about.html">Submit</a> 
+      <a href="products.html">Opportunities</a>
+      <a href="login.html">Login</a>
+      
+    </div>
+  </nav>
+
+  <h1>About</h1>
+
+  
 
     <h1>EmployeeExpress©</h1>
     <hr>
@@ -86,16 +109,10 @@
 
         <br>
 
-        <label for = "type">Annual Type of Work: </label>
-            <select id = "annualwork" name = "annualwork">
-                <option>Seasonal</option>
-                <option>Intern</option>
-                <option>Part-Time</option>
-                <option>Full-Time</option>
-
-            </select>
+        <div>
+            <label for = "time">Time of Posting:</label>
+            <input type = "time" id = "timesubmission" name = "timesubmission">
         </div>
-
 
         <br>
 
@@ -135,7 +152,6 @@
         const phonenumber = document.getElementById('phonenumber');
         const datepost = document.getElementById('datepost');
         const timesubmission = document.getElementById('timesubmission');
-        const annualwork = document.getElementById('annualwork')
         const worktype = document.getElementById('worktype');
         const workhours = document.getElementById('workhours');
 
@@ -149,7 +165,6 @@
             const phonenumberValue = phonenumber.value;
             const datepostValue = datepost.value;
             const timesubmissionValue = timesubmission.value;
-            const annualworkValue = annualwork.value;
             const worktypeValue = worktype.value;
             const workhoursValue = workhours.value;
 
@@ -161,7 +176,6 @@
             localStorage.setItem('phone-number', phonenumberValue);
             localStorage.setItem('date-post', datepostValue);
             localStorage.setItem('time-submission', timesubmissionValue);
-            localStorage.setItem('annual-work',annualworkValue)
             localStorage.setItem('work-type', worktypeValue);
             localStorage.setItem('work-hours', workhoursValue);
 
@@ -170,6 +184,9 @@
 
     </script>
 
-</body>
 
+
+
+</body>
 </html>
+
