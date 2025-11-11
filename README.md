@@ -2,7 +2,7 @@
 
 A preview admissions application system submitted on behalf of the 2025 FBLA competition series.
 
-A project cycle has been established, with the main emphasis being geared towards ambitious students of all ages and interests. With the current application sphere being consistent with a lot of different website domains and link connections, a new proposal has been developed that aims to keep the different components of applications on one website. This way, it can be ensured that the process of application development is _quick, simple, and preferred.__ With this product, the main hope is to improve the efficiency, exponentially, of the current system in place that oversees the entry, release, and turnout of various applications.
+A project cycle has been established, with the main emphasis being geared towards ambitious students of all ages and interests. With the current application sphere being consistent with a lot of different website domains and link connections, a new proposal has been developed that aims to keep the different components of applications on one website. This way, it can be ensured that the process of application development is _quick, simple, and preferred._ With this product, the main hope is to improve the efficiency, exponentially, of the current system in place that oversees the entry, release, and turnout of various applications.
 
 As regionalists, with associated contributions by **Eugene Kim, Ansh Gupta, and Ashrith Ponna**, a base infrastructure on website development has been produced.<br>
 The main applications of this website are vast, with numerous capabilities and potential, especially with **programming support from CSS, Javascript, and HTML.**<br>
