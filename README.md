@@ -6,7 +6,7 @@ A project cycle has been established, with the main emphasis being geared toward
 
 As regionalists, with associated contributions by **Eugene Kim, Ansh Gupta, and Ashrith Ponna**, a base infrastructure on website development has been produced.<br>
 The main applications of this website are vast, with numerous capabilities and potential, especially with **programming support from CSS, Javascript, and HTML.**<br>
-The follow components are all features of this website project (_do keep it mind that relevant (future) changes will most likely not be in oversight at the current moment):<br>
+The follow components are all features of this website project (_do keep it mind that relevant (future) changes will most likely not be in oversight at the current moment)_:<br>
 * Animated UI that allows interactions from user.
 * Interactive (and animated) prompts that connect seamlessly to other domains and website infrastructures.
 * Active user portals that manages and stores account credentials.
